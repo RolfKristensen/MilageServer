@@ -1,20 +1,24 @@
 FORMAT: 1A
-HOST: http://polls.apiblueprint.org/
+HOST: http://milage.heroku.lightsaber.dk/
 
 # dk.lightsaber.milage
 
 Application for registering the fuel consumption and driven km. 
 It is a user based application, where users can register their cars and milage records.
 
-## Questions Collection [/milages]
+
+## Milages Collection [/milages]
 
 ### List milage records [GET]
+Get a list of all milage records for the authorized user.
 
-+ Response 200 (application/json)
++ Request (application/json)
     + Headers
         
             Authorization : BASIC
-        
+            Accept : application/json
+
++ Response 200 (application/json)
     + Body
 
             {
@@ -50,48 +54,178 @@ It is a user based application, where users can register their cars and milage r
                 ]
             }
 
-### Create a New Question [POST]
++ Request (application/xml)
+    + Headers
+        
+            Authorization : BASIC
+            Accept : application/xml
 
-You may create your own question using this action. It takes a JSON
-object containing a question and a collection of answers in the
-form of choices.
++ Response 200 (application/xml)
+    + Body
+
+            <milage_response>
+                <num_of_rec>2</num_of_rec>
+                <milages>
+                    <milage>
+                        <id>1</id>
+                        <litres_fuled>50</litres_fueld>
+                        <km_driven>1000</km_driven>
+                        <date_fuled>2016-01-01T12:00+01:00</date_fuled>
+                        <gas_type_id>1</gas_type_id>
+                        <gas_station_id>1<gas_station_id>
+                        <car_id>1</car_id>
+                        <km_l>20</km_l>
+                        <price_l>10<price_l>
+                        <price_km>0.5</price_km>
+                        <price_sum>500</price_sum>
+                    </milage>
+                    <milage>
+                        <id>2</id>
+                        <litres_fuled>50</litres_fueld>
+                        <km_driven>1000</km_driven>
+                        <date_fuled>2016-02-01T12:00+01:00</date_fuled>
+                        <gas_type_id>1</gas_type_id>
+                        <gas_station_id>1<gas_station_id>
+                        <car_id>1</car_id>
+                        <km_l>20</km_l>
+                        <price_l>10<price_l>
+                        <price_km>0.5</price_km>
+                        <price_sum>500</price_sum>
+                    </milage>
+                </milages>
+            </milage_response>
+
+### Register a new milage record [POST]
+
+Register a new milage record. This is done when you fillup your tank on your car.
+The response header will contain a reference to milage record in case it was created succesfully, with the "Location" attribute.
 
 + Request (application/json)
 
-        {
-            "question": "Favourite programming language?",
-            "choices": [
-                "Swift",
-                "Python",
-                "Objective-C",
-                "Ruby"
-            ]
-        }
+    + Headers
+        
+            Authorization : BASIC
+
+    + Body
+
+            {
+                "litres_fuled" : "50",
+                "km_driven" : "1000",
+                "date_fuled" : "2016-03-01T12:00+01:00",
+                "gas_type_id" : "1",
+                "gas_station_id" : "1",
+                "car_id" : "1",
+                "price_l" : "10"
+            }
 
 + Response 201 (application/json)
 
     + Headers
 
-            Location: /questions/2
+            Location: /milages/3
 
     + Body
 
             {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 0
-                    }, {
-                        "choice": "Python",
-                        "votes": 0
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 0
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 0
-                    }
-                ]
+            }
+
+## Milage record [/milages/{id}]
+
++ Parameters
+    + id (number, required) - ID of the milage record
+
+### Get a milage record [GET]
+
+Request for retrieving data for one specific milage record
+
++ Request (application/json)
+    + Headers
+        
+            Authorization : BASIC
+
++ Response 201 (application/json)
+    + Body
+
+            {
+                "id" : "1",
+                "litres_fuled" : "50",
+                "km_driven" : "1000",
+                "date_fuled" : "2016-01-01T12:00+01:00",
+                "gas_type_id" : "1",
+                "gas_station_id" : "1",
+                "car_id" : "1",
+                "km_l" : "20",
+                "price_l" : "10",
+                "price_km" : "0.5",
+                "price_sum" : "500"
+            }
+
+### Get a milage record [PUT]
+
+Request for updating data for one specific milage record
+
++ Request (application/json)
+    + Headers
+        
+            Authorization : BASIC
+        
+    + Body
+
+            {
+                "id" : "1",
+                "litres_fuled" : "50",
+                "km_driven" : "1000",
+                "date_fuled" : "2016-01-01T12:00+01:00",
+                "gas_type_id" : "1",
+                "gas_station_id" : "1",
+                "car_id" : "1",
+                "km_l" : "20",
+                "price_l" : "10",
+                "price_km" : "0.5",
+                "price_sum" : "500"
+            }
++ Response 200 (application/json)
+
+
+### Get a milage record [DELETE]
+
+Request for updating data for one specific milage record
+
++ Response 200 (application/json)
+    + Body
+
+            {
+                "id" : "1",
+                "litres_fuled" : "50",
+                "km_driven" : "1000",
+                "date_fuled" : "2016-01-01T12:00+01:00",
+                "gas_type_id" : "1",
+                "gas_station_id" : "1",
+                "car_id" : "1",
+                "km_l" : "20",
+                "price_l" : "10",
+                "price_km" : "0.5",
+                "price_sum" : "500"
+            }
+
+## Users [/users]
+
+Requests related to the user management.
+
+### Get user info [GET]
+
+Retrieve the user information.
+
++ Request (applications/json)
+    + Headers
+
+            Authorization : BASIC
+
++ Response 200 (application/json)
+    + Body
+
+            {
+                "first_name" : "John",
+                "last_name" : "Doe",
+                "email" : "john-doe@lightsaber.dk"
             }
