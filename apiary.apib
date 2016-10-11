@@ -7,7 +7,7 @@ Application for registering the fuel consumption and driven km.
 It is a user based application, where users can register their cars and milage records.
 
 
-## Milages Collection [/milages]
+## Milages Collection [/auth/milages]
 
 ### List milage records [GET /milages?{&row_limit}{&last_x_months}]
 Get a list of all milage records for the authorized user.
@@ -141,7 +141,7 @@ The service returns 401 in case the user is not authenticated
             {
             }
 
-## Milage record [/milages/{id}]
+## Milage record [/auth/milages/{id}]
 
 + Parameters
     + id (number, required) - ID of the milage record
@@ -243,7 +243,7 @@ The service returns 401 in case the user is not authenticated
                 "price_sum" : "500"
             }
 
-## Users [/users]
+## Users [/auth/users]
 
 Requests related to the user management.
 
@@ -271,17 +271,18 @@ The service returns 401 in case the user is not authenticated
                 "email" : "john-doe@lightsaber.dk"
             }
 
-## Gas Stations [/gasstations]
+## Gas Stations [/basic/gasstations]
 
 ### Get list of gas stations [GET]
 
 + Request (application/json)
     + Headers
-    
+
             If-Modified-Since : 2016-01-01T12:00:00+00:01
 
 + Response 200 (application/json)
     + Headers
+
             Cache-Control : max-age=3600
     + Body
 
@@ -301,17 +302,18 @@ The service returns 401 in case the user is not authenticated
 + Response 304 (application/json)
 
 
-## Gas Types [/gastypes]
+## Gas Types [/basic/gastypes]
 
 ### Get list of gas types [GET]
 
 + Request (application/json)
     + Headers
-    
+
             If-Modified-Since : 2016-01-01T12:00:00+00:01
 
 + Response 200 (application/json)
     + Headers
+
             Cache-Control : max-age=3600
     + Body
 
