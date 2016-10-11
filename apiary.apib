@@ -9,15 +9,21 @@ It is a user based application, where users can register their cars and milage r
 
 ## Milages Collection [/milages]
 
-### List milage records [GET]
+### List milage records [GET /milages?{&row_limit}{&last_x_months}]
 Get a list of all milage records for the authorized user.
+
++ Response 401
+The service returns 401 in case the user is not authenticated
+    + Headers
+    
+            WWW-Authenticate: Basic realm="/"
 
 + Request (application/json)
     + Headers
         
-            Authorization : BASIC
+            Authorization : BASIC base64
             Accept : application/json
-
+        
 + Response 200 (application/json)
     + Body
 
@@ -57,7 +63,7 @@ Get a list of all milage records for the authorized user.
 + Request (application/xml)
     + Headers
         
-            Authorization : BASIC
+            Authorization : BASIC base64
             Accept : application/xml
 
 + Response 200 (application/xml)
@@ -100,11 +106,17 @@ Get a list of all milage records for the authorized user.
 Register a new milage record. This is done when you fillup your tank on your car.
 The response header will contain a reference to milage record in case it was created succesfully, with the "Location" attribute.
 
++ Response 401
+The service returns 401 in case the user is not authenticated
+    + Headers
+    
+            WWW-Authenticate: Basic realm="/"
+
 + Request (application/json)
 
     + Headers
         
-            Authorization : BASIC
+            Authorization : BASIC base64
 
     + Body
 
@@ -138,10 +150,16 @@ The response header will contain a reference to milage record in case it was cre
 
 Request for retrieving data for one specific milage record
 
++ Response 401
+The service returns 401 in case the user is not authenticated
+    + Headers
+    
+            WWW-Authenticate: Basic realm="/"
+
 + Request (application/json)
     + Headers
         
-            Authorization : BASIC
+            Authorization : BASIC base64
 
 + Response 201 (application/json)
     + Body
@@ -160,14 +178,20 @@ Request for retrieving data for one specific milage record
                 "price_sum" : "500"
             }
 
-### Get a milage record [PUT]
+### Update a milage record [PUT]
 
 Request for updating data for one specific milage record
+
++ Response 401
+The service returns 401 in case the user is not authenticated
+    + Headers
+    
+            WWW-Authenticate: Basic realm="/"
 
 + Request (application/json)
     + Headers
         
-            Authorization : BASIC
+            Authorization : BASIC base64
         
     + Body
 
@@ -187,9 +211,20 @@ Request for updating data for one specific milage record
 + Response 200 (application/json)
 
 
-### Get a milage record [DELETE]
+### Delete a milage record [DELETE]
 
 Request for updating data for one specific milage record
+
++ Response 401
+The service returns 401 in case the user is not authenticated
+    + Headers
+    
+            WWW-Authenticate: Basic realm="/"
+
++ Request (applications/json)
+    + Headers
+
+            Authorization : BASIC base64
 
 + Response 200 (application/json)
     + Body
@@ -216,10 +251,16 @@ Requests related to the user management.
 
 Retrieve the user information.
 
++ Response 401
+The service returns 401 in case the user is not authenticated
+    + Headers
+    
+            WWW-Authenticate: Basic realm="/"
+
 + Request (applications/json)
     + Headers
 
-            Authorization : BASIC
+            Authorization : BASIC base64
 
 + Response 200 (application/json)
     + Body
@@ -229,3 +270,62 @@ Retrieve the user information.
                 "last_name" : "Doe",
                 "email" : "john-doe@lightsaber.dk"
             }
+
+## Gas Stations [/gasstations]
+
+### Get list of gas stations [GET]
+
++ Request (application/json)
+    + Headers
+    
+            If-Modified-Since : 2016-01-01T12:00:00+00:01
+
++ Response 200 (application/json)
+    + Headers
+            Cache-Control : max-age=3600
+    + Body
+
+            { 
+            [
+                {
+                    "id" : "1",
+                    "name" : "Shell"
+                },
+                {
+                    "id" : "2",
+                    "name" : "Statoil"
+                }
+            ]
+            }
+
++ Response 304 (application/json)
+
+
+## Gas Types [/gastypes]
+
+### Get list of gas types [GET]
+
++ Request (application/json)
+    + Headers
+    
+            If-Modified-Since : 2016-01-01T12:00:00+00:01
+
++ Response 200 (application/json)
+    + Headers
+            Cache-Control : max-age=3600
+    + Body
+
+            { 
+            [
+                {
+                    "id" : "1",
+                    "name" : "Gasoline"
+                },
+                {
+                    "id" : "2",
+                    "name" : "Diesel"
+                }
+            ]
+            }
+
++ Response 304 (application/json)
